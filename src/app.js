@@ -22,7 +22,8 @@ const navigatorStyle = {
     drawUnderTabBar: true,
     navBarBackgroundColor: 'white',
 	navBarTextFontFamily: fonts.junegullRegular,
-	navBarTextColor: colors.orange
+	navBarTextColor: colors.orange,
+	navBarTextFontSize: 23
 };
 
 Navigation.startSingleScreenApp({
