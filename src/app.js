@@ -17,7 +17,6 @@ const store = configureStore();
 registerScreens(store, Provider);
 
 const navigatorStyle = {
-	navBarTranslucent: true,
 	drawUnderNavBar: true,
     drawUnderTabBar: true,
     navBarBackgroundColor: 'white',
