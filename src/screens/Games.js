@@ -23,7 +23,7 @@ export default class Games extends Component {
       {
         ...Platform.select({
           ios: {
-            title: 'Graj',
+            title: 'Zagraj',
             buttonColor: colors.orange,
             buttonFontSize: 20,
             buttonFontFamily: fonts.junegullRegular,
@@ -40,9 +40,6 @@ export default class Games extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.hello}>
-          Witaj adiki
-        </Text>
         <Text style={styles.lastGamesPrompt}>
           Twoje ostatnie gry będą pokazane tutaj
         </Text>
@@ -67,13 +64,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white'
-  },
-  hello: {
-    fontSize: 30,
-    fontFamily: fonts.medium,
-    textAlign: 'center',
-    color: colors.textGray,
-    margin: 10,
   },
   lastGamesPrompt: {
     fontSize: 20,
