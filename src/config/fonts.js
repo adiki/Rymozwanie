@@ -4,6 +4,7 @@
 
 const fonts = {
 	medium: 'proximanovasoft-medium',
+	bold: 'proximanovasoft-bold',
 	junegullRegular: 'Junegull-Regular'
 };
 
