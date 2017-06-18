@@ -12,9 +12,7 @@ const navigatorStyle = {
 	navBarTextFontFamily: fonts.junegullRegular,
 	navBarTextColor: colors.orange,
 	navBarTextFontSize: 23,
-	navBarButtonColor: colors.orange,
-	navBarButtonFontSize: 32,
-	navBarButtonFontFamily: fonts.bold,
+	navBarButtonColor: colors.orange
 };
 
 export default navigatorStyle;
