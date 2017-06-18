@@ -1,6 +1,4 @@
-/**
- * @flow
- */
+/* @flow */
 
 'use strict';
 
@@ -15,23 +13,24 @@ import {
 } from 'react-native';
 import colors from '../config/colors';
 import fonts from '../config/fonts';
+import navigatorStyle from '../config/navigatorStyle';
 
 export default class Games extends Component {
 
   static navigatorButtons = {
     rightButtons: [
       {
-        ...Platform.select({
-          ios: {
-            title: 'Zagraj',
-            buttonColor: colors.orange,
-            buttonFontSize: 20,
-            buttonFontFamily: fonts.junegullRegular,
-          },
-          android: {
+        // ...Platform.select({
+        //   ios: {
+        //     title: 'Zagraj',
+        //     buttonColor: colors.orange,
+        //     buttonFontSize: 20,
+        //     buttonFontFamily: fonts.junegullRegular,
+        //   },
+        //   android: {
             icon: require('../../assets/img/icons/plus.png'),
-          },
-        }),
+          // },
+        // }),
         id: 'new_game',
       }
     ]
@@ -43,7 +42,7 @@ export default class Games extends Component {
         <Text style={styles.lastGamesPrompt}>
           Twoje ostatnie gry będą pokazane tutaj
         </Text>
-        <TouchableHighlight onPress={this.newGameButtonPressed}
+        <TouchableHighlight onPress={this.newGameButtonPressed.bind(this)}
                             underlayColor='white'>
           <Text style={styles.newGame}>
             Rozpocznij nową grę
@@ -54,7 +53,12 @@ export default class Games extends Component {
   }
 
   newGameButtonPressed() {
-    console.log("pressed");
+    this.props.navigator.push({
+       screen: 'rymozwanie.Game',
+       title: 'Rymozwanie',
+       backButtonTitle: '',
+       navigatorStyle
+    });
   }
 }
 
