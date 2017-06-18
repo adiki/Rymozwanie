@@ -17,25 +17,6 @@ import navigatorStyle from '../config/navigatorStyle';
 
 export default class Games extends Component {
 
-  static navigatorButtons = {
-    rightButtons: [
-      {
-        // ...Platform.select({
-        //   ios: {
-        //     title: 'Zagraj',
-        //     buttonColor: colors.orange,
-        //     buttonFontSize: 20,
-        //     buttonFontFamily: fonts.junegullRegular,
-        //   },
-        //   android: {
-            icon: require('../../assets/img/icons/plus.png'),
-          // },
-        // }),
-        id: 'new_game',
-      }
-    ]
-  };
-
   render() {
     return (
       <View style={styles.container}>
