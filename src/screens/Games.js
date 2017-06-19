@@ -16,21 +16,11 @@ import navigatorStyle from '../config/navigatorStyle';
 
 export default class Games extends Component {
 
-  static navigatorButtons = {
-    rightButtons: [
-      {
-        icon: require('../../assets/img/icons/play.png'),
-        id: 'new_game',
-      }
-    ]
-  };
-
-
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.lastGamesPrompt}>
-          Twoje ostatnie rymy będą pokazane tutaj
+          Rymozwanie to gra polegająca na układaniu rymujących się wersów.
         </Text>
         <TouchableHighlight onPress={this.newGameButtonPressed.bind(this)}
                             underlayColor='white'>
@@ -43,12 +33,6 @@ export default class Games extends Component {
   }
 
   newGameButtonPressed() {
-    this.props.navigator.push({
-       screen: 'rymozwanie.Game',
-       title: 'Rymozwanie',
-       backButtonTitle: '',
-       navigatorStyle
-    });
   }
 }
 
