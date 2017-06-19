@@ -4,9 +4,8 @@
 
 import React, { Component } from 'react';
 import {
-  Button,
-  Platform,
   StyleSheet,
+  Image,
   Text,
   TouchableHighlight,
   View
@@ -20,7 +19,7 @@ export default class Games extends Component {
   static navigatorButtons = {
     rightButtons: [
       {
-        icon: require('../../assets/img/icons/plus.png'),
+        icon: require('../../assets/img/icons/play.png'),
         id: 'new_game',
       }
     ]
@@ -31,12 +30,12 @@ export default class Games extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.lastGamesPrompt}>
-          Twoje ostatnie gry będą pokazane tutaj
+          Twoje ostatnie rymy będą pokazane tutaj
         </Text>
         <TouchableHighlight onPress={this.newGameButtonPressed.bind(this)}
                             underlayColor='white'>
           <Text style={styles.newGame}>
-            Rozpocznij nową grę
+            Rozpocznij grę 
           </Text>
         </TouchableHighlight>
       </View>
