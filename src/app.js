@@ -17,7 +17,7 @@ registerScreens(store, Provider);
 
 Navigation.startSingleScreenApp({
 	screen: {
-		screen: 'rymozwanie.Games',
+		screen: 'rymozwanie.Game',
 		title: 'Rymozwanie',
 		navigatorStyle
 	}

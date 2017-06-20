@@ -4,15 +4,42 @@
 
 import React, { Component } from 'react';
 import {
-  View,
-  StyleSheet
+  StyleSheet,
+  ActivityIndicator,
+  Image,
+  Text,
+  TouchableHighlight,
+  View
 } from 'react-native';
+import { connect } from 'react-redux';
+import colors from '../config/colors';
+import EmptyGame from '../components/EmptyGame';
+import fonts from '../config/fonts';
+import navigatorStyle from '../config/navigatorStyle';
+import { fetchStoredVerses } from '../actions';
 
-export default class Games extends Component {
+class Game extends Component {
+
+  componentWillMount() {
+    this.props.fetchStoredVerses();
+  }
+
+  renderContent() {
+    if (this.props.verses === null) {
+      return <ActivityIndicator/>
+    }
+
+    if (this.props.verses.length == 0) {
+      return <EmptyGame/>
+    }
+
+    return <View/>
+  }
 
   render() {
     return (
       <View style={styles.container}>
+        {this.renderContent()}
       </View>
     );
   }
@@ -26,3 +53,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   }
 });
+
+const mapStateToProps = state => {
+  const { loaded, verses } = state.game;
+  return { loaded, verses };
+};
+
+export default connect(mapStateToProps, { fetchStoredVerses })(Game);
