@@ -19,19 +19,27 @@ import { currentReplyDidChange, submitReply } from '../actions';
 
 class VerseInput extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = { textInputHeight: 34 }
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <TextInput style={styles.textInput} 
-                            value={this.props.currentReply}
-                            autoFocus={true}
-                            returnKeyType='done'
-                            blurOnSubmit={false} 
-                            placeholder='Twój rymujący się werset'
-                            onChangeText={(this.onInputTextChange.bind(this))}
-                            onSubmitEditing={this.submit.bind(this)}/>
-                <TouchableHighlight style={styles.touchableHighlight} 
-                                    onPress={this.replyButtonPressed.bind(this)}
+                <TextInput style={[styles.textInput, { height: this.state.textInputHeight }]}
+                    value={this.props.currentReply}
+                    autoFocus={true}
+                    returnKeyType='done'
+                    blurOnSubmit={false}
+                    multiline={true}
+                    placeholder='Twój rymujący się werset'
+                    onChangeText={(this.onInputTextChange.bind(this))}
+                    onSubmitEditing={this.submit.bind(this)}
+                    onContentSizeChange={(e) => this.updateSize(e.nativeEvent.contentSize.height)} />
+                <TouchableHighlight style={styles.touchableHighlight}
+                    onPress={this.replyButtonPressed.bind(this)}
                     underlayColor='white'>
                     <Text style={styles.replyButton}>
                         Odpowiedz
@@ -39,6 +47,12 @@ class VerseInput extends Component {
                 </TouchableHighlight>
             </View>
         );
+    }
+
+    updateSize = (textInputHeight) => {
+        this.setState({
+            textInputHeight: Math.min(Math.max(34, textInputHeight), 136)
+        });
     }
 
     onInputTextChange(value) {
@@ -71,11 +85,12 @@ const styles = StyleSheet.create({
         backgroundColor: colors.lightGray,
         borderRadius: 5,
         fontFamily: fonts.medium,
+        fontSize: 17,
         paddingLeft: 5,
         paddingRight: 5,
     },
     replyButton: {
-        fontSize: 17,
+        fontSize: 20,
         fontFamily: fonts.bold,
         color: colors.orange,
         padding: 10,
