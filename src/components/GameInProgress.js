@@ -8,7 +8,10 @@ import {
     ListView,
     Text,
     TouchableHighlight,
-    View
+    View,
+    Keyboard,
+    Dimensions,
+    LayoutAnimation
 } from 'react-native';
 import { connect } from 'react-redux';
 import colors from '../config/colors';
@@ -16,11 +19,43 @@ import fonts from '../config/fonts';
 import navigatorStyle from '../config/navigatorStyle';
 import { generateVerse } from '../actions';
 import GeneratedVerse from './GeneratedVerse';
+import VerseInput from './VerseInput';
 
 class GameInProgress extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = { keyboardHeight: 0 }
+    }
+
     componentWillMount() {
         this.createDataSource(this.props);
+
+        this.keyboardWillShow = Keyboard.addListener('keyboardWillShow', this.keyboardWillShow);
+        this.keyboardWillHide = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
+    }
+
+    componentWillUnmount() {
+        this.keyboardWillShow.remove();
+        this.keyboardWillHide.remove();
+    }
+
+    keyboardWillShow = (event) => {
+        let newSize = event.endCoordinates.height
+        
+        this.setState({
+            keyboardHeight: newSize,
+        })
+        LayoutAnimation.configureNext({...LayoutAnimation.Presets.linear, duration: event.duration});
+    }
+
+    keyboardWillHide = (event) => {
+        
+        this.setState({
+            keyboardHeight: 0,
+        })
+        LayoutAnimation.configureNext({...LayoutAnimation.Presets.linear, duration: event.duration});
     }
 
     componentWillReceiveProps(nextProps) {
@@ -45,15 +80,19 @@ class GameInProgress extends Component {
 
     render() {
         return (
-            <ListView
-                dataSource={this.dataSource}
-                renderRow={(verse) => {
-                    if (verse.generated) {
-                        return this.renderGeneratedVerse(verse);
-                    } else {
-                        return this.renderUserVerse(verse);
-                    }
-                }} />
+            <View>
+                <ListView
+                    dataSource={this.dataSource}
+                    renderRow={(verse) => {
+                        if (verse.generated) {
+                            return this.renderGeneratedVerse(verse);
+                        } else {
+                            return this.renderUserVerse(verse);
+                        }
+                    }} />
+                <VerseInput />
+                <View style={{height: this.state.keyboardHeight}} />
+            </View>
         );
     }
 }

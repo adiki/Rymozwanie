@@ -5,12 +5,15 @@
 import React, { Component } from 'react';
 import {
   StyleSheet,
+  Dimensions,
   ActivityIndicator,
   Image,
   KeyboardAvoidingView,
   Text,
   TouchableHighlight,
-  View
+  View,
+  Keyboard,
+  LayoutAnimation 
 } from 'react-native';
 import { connect } from 'react-redux';
 import colors from '../config/colors';
@@ -40,11 +43,10 @@ class Game extends Component {
 
   render() {
     return (
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior="padding">
+      <View
+        style={styles.container}>
         {this.renderContent()}
-      </KeyboardAvoidingView>
+      </View>
     );
   }
 }
