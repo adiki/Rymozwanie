@@ -82,6 +82,7 @@ class GameInProgress extends Component {
         return (
             <View>
                 <ListView
+                    keyboardDismissMode='on-drag'
                     dataSource={this.dataSource}
                     renderRow={(verse) => {
                         if (verse.generated) {

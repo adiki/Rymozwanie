@@ -22,7 +22,11 @@ class VerseInput extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TextInput style={styles.textInput}/>
+                <TextInput style={styles.textInput} 
+                            autoFocus={true}
+                            returnKeyType='done'
+                            blurOnSubmit={false} 
+                            onSubmitEditing={this.submit.bind(this)}/>
                 <TouchableHighlight style={styles.touchableHighlight} 
                                     onPress={this.replyButtonPressed.bind(this)}
                     underlayColor='white'>
@@ -34,6 +38,9 @@ class VerseInput extends Component {
         );
     }
 
+    submit() {
+    }
+
     replyButtonPressed() {
 
     }
@@ -43,7 +50,6 @@ const styles = StyleSheet.create({
 
     container: {
         flexDirection: 'row',
-        // justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'white',
         borderTopWidth: 1,
@@ -51,7 +57,9 @@ const styles = StyleSheet.create({
     },
     textInput: {
         flex: 1,
-        margin: 5,
+        marginTop: 5,
+        marginLeft: 5,
+        marginBottom: 5,
         backgroundColor: colors.lightGray,
         borderRadius: 5,
         fontFamily: fonts.medium,
