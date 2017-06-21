@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   Image,
+  KeyboardAvoidingView,
   Text,
   TouchableHighlight,
   View
@@ -14,6 +15,7 @@ import {
 import { connect } from 'react-redux';
 import colors from '../config/colors';
 import EmptyGame from '../components/EmptyGame';
+import GameInProgress from '../components/GameInProgress';
 import fonts from '../config/fonts';
 import navigatorStyle from '../config/navigatorStyle';
 import { fetchStoredVerses } from '../actions';
@@ -26,21 +28,23 @@ class Game extends Component {
 
   renderContent() {
     if (this.props.verses === null) {
-      return <ActivityIndicator/>
+      return <ActivityIndicator />
     }
 
     if (this.props.verses.length == 0) {
-      return <EmptyGame/>
+      return <EmptyGame />
     }
 
-    return <View/>
+    return <GameInProgress />
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding">
         {this.renderContent()}
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -55,8 +59,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  const { loaded, verses } = state.game;
-  return { loaded, verses };
+  const { verses } = state.game;
+  return { verses };
 };
 
 export default connect(mapStateToProps, { fetchStoredVerses })(Game);

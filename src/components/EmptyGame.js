@@ -10,11 +10,13 @@ import {
   TouchableHighlight,
   View
 } from 'react-native';
+import { connect } from 'react-redux';
 import colors from '../config/colors';
 import fonts from '../config/fonts';
 import navigatorStyle from '../config/navigatorStyle';
+import { generateVerse } from '../actions';
 
-export default class EmptyGame extends Component {
+class EmptyGame extends Component {
 
   render() {
     return (
@@ -23,9 +25,9 @@ export default class EmptyGame extends Component {
           Rymozwanie to gra polegająca na układaniu rymujących się wersów.
         </Text>
         <TouchableHighlight onPress={this.newGameButtonPressed.bind(this)}
-                            underlayColor='white'>
+          underlayColor='white'>
           <Text style={styles.startGameButton}>
-            Rozpocznij grę 
+            Rozpocznij grę
           </Text>
         </TouchableHighlight>
       </View>
@@ -33,6 +35,7 @@ export default class EmptyGame extends Component {
   }
 
   newGameButtonPressed() {
+    this.props.generateVerse();
   }
 }
 
@@ -53,3 +56,5 @@ const styles = StyleSheet.create({
     margin: 20,
   },
 });
+
+export default connect(null, { generateVerse })(EmptyGame);
