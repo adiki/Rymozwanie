@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import colors from '../config/colors';
 import fonts from '../config/fonts';
 import navigatorStyle from '../config/navigatorStyle';
-import { generateVerse } from '../actions';
+import { currentReplyDidChange, submitReply } from '../actions';
 
 class VerseInput extends Component {
 
@@ -23,9 +23,12 @@ class VerseInput extends Component {
         return (
             <View style={styles.container}>
                 <TextInput style={styles.textInput} 
+                            value={this.props.currentReply}
                             autoFocus={true}
                             returnKeyType='done'
                             blurOnSubmit={false} 
+                            placeholder='Twój rymujący się werset'
+                            onChangeText={(this.onInputTextChange.bind(this))}
                             onSubmitEditing={this.submit.bind(this)}/>
                 <TouchableHighlight style={styles.touchableHighlight} 
                                     onPress={this.replyButtonPressed.bind(this)}
@@ -38,11 +41,16 @@ class VerseInput extends Component {
         );
     }
 
+    onInputTextChange(value) {
+        this.props.currentReplyDidChange(value)
+    }
+
     submit() {
+        this.props.submitReply();
     }
 
     replyButtonPressed() {
-
+        this.props.submitReply();
     }
 }
 
@@ -74,4 +82,9 @@ const styles = StyleSheet.create({
     },
 });
 
-export default connect(null)(VerseInput);
+const mapStateToProps = state => {
+    const { currentReply } = state.game;
+    return { currentReply };
+};
+
+export default connect(mapStateToProps, { currentReplyDidChange, submitReply })(VerseInput);

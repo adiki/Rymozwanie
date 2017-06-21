@@ -23,3 +23,16 @@ export const generateVerse = () => {
         type: 'generate_verse',
     };
 };
+
+export const currentReplyDidChange = (currentReply) => {
+    return {
+        type: 'current_reply_did_change',
+        payload: currentReply
+    };
+};
+
+export const submitReply = () => {
+    return {
+        type: 'submit_reply',
+    };
+};

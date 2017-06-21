@@ -19,6 +19,7 @@ import fonts from '../config/fonts';
 import navigatorStyle from '../config/navigatorStyle';
 import { generateVerse } from '../actions';
 import GeneratedVerse from './GeneratedVerse';
+import UserVerse from './UserVerse';
 import VerseInput from './VerseInput';
 
 class GameInProgress extends Component {
@@ -75,7 +76,7 @@ class GameInProgress extends Component {
     }
 
     renderUserVerse(verse) {
-        return <Text>TODO: User verse</Text>;
+        return <UserVerse verse={verse} />;
     }
 
     render() {

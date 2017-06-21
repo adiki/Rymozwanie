@@ -6,7 +6,8 @@ import versesPool from '../../assets/text/verses.json';
 
 const INITIAL_STATE = {
     verses: null,
-    versesPool
+    versesPool,
+    currentReply: ''
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -18,6 +19,18 @@ export default (state = INITIAL_STATE, action) => {
             const newVerses = Array.from(state.verses);
             newVerses.push({ generated: true, verseIndex: 0 })
             return { ...state, verses: newVerses };
+        case 'current_reply_did_change':
+            return { ...state, currentReply: action.payload }
+        case 'submit_reply':
+
+            if (state.currentReply == '') {
+                return state;
+            }
+
+            newVerses = Array.from(state.verses);
+            newVerses.push({ generated: false, value: state.currentReply })
+            newVerses.push({ generated: true, verseIndex: 0 })
+            return { ...state, verses: newVerses, currentReply: '' }
         default:
             return state;
     }
