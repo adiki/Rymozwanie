@@ -51,7 +51,7 @@ class VerseInput extends Component {
 
     updateSize = (textInputHeight) => {
         this.setState({
-            textInputHeight: Math.min(Math.max(34, textInputHeight), 136)
+            textInputHeight: Math.min(Math.max(34, textInputHeight + 10), 136)
         });
     }
 
@@ -85,12 +85,11 @@ const styles = StyleSheet.create({
         backgroundColor: colors.lightGray,
         borderRadius: 5,
         fontFamily: fonts.medium,
-        fontSize: 17,
-        paddingLeft: 5,
-        paddingRight: 5,
+        fontSize: 18,
+        padding: 5,
     },
     replyButton: {
-        fontSize: 20,
+        fontSize: 17,
         fontFamily: fonts.bold,
         color: colors.orange,
         padding: 10,
