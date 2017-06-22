@@ -48,7 +48,6 @@ class GeneratedVerse extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        transform: [{ rotate: '180deg'}],
         width: Dimensions.get('window').width * 1,
         flexDirection: 'row',
     },
