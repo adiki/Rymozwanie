@@ -110,7 +110,7 @@ class GameInProgress extends Component {
         return (
             <View>
                 <ListView ref={component => this._listView = component}
-                    keyboardDismissMode='on-drag'
+                    style={{width: Dimensions.get('window').width}}
                     dataSource={this.dataSource}
                     onLayout={(event) => {
                         const { height } = event.nativeEvent.layout

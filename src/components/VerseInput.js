@@ -32,8 +32,7 @@ class VerseInput extends Component {
                     style={[styles.textInput, { height: this.state.textInputHeight }]}
                     value={this.props.currentReply}
                     autoFocus={true}
-                    returnKeyType='done'
-                    blurOnSubmit={false}
+                    returnKeyType='done'                
                     multiline={true}
                     placeholder='Twój rymujący się werset'
                     onChangeText={(this.onInputTextChange.bind(this))}
