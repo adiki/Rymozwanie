@@ -37,6 +37,7 @@ class GeneratedVerse extends Component {
         return (
             <Animated.View style={[styles.container, { opacity: this.state.opacity }]}>
                 <View style={styles.innerContainer}>
+                    <View style={styles.margin} />
                     <View style={styles.verseBox}>
                         <Text style={styles.text}>{this.props.verse.value}</Text>
                     </View>
@@ -48,15 +49,16 @@ class GeneratedVerse extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        
         width: Dimensions.get('window').width * 1,
         flexDirection: 'row',
         justifyContent: 'flex-end'
     },
     innerContainer: {
-        width: Dimensions.get('window').width * 0.8,
+        flex: 8,
         flexDirection: 'row',
-        justifyContent: 'flex-end'
+    },
+    margin: {
+        flex: 2
     },
     verseBox: {
         backgroundColor: colors.orange,

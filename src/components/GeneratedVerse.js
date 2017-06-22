@@ -41,6 +41,7 @@ class GeneratedVerse extends Component {
                         <Text style={styles.text}>{this.props.versesPool[this.props.verse.verseIndex]}</Text>
                     </View>
                 </View>
+                <View style={styles.margin} />
             </Animated.View>
         );
     }
@@ -52,8 +53,11 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     innerContainer: {
-        width: Dimensions.get('window').width * 0.8,
+        flex: 8,
         flexDirection: 'row',
+    },
+    margin: {
+        flex: 2
     },
     verseBox: {
         backgroundColor: colors.yellow,
