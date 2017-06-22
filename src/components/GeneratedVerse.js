@@ -38,7 +38,7 @@ class GeneratedVerse extends Component {
             <Animated.View style={[styles.container, { opacity: this.state.opacity }]}>
                 <View style={styles.innerContainer}>
                     <View style={styles.verseBox}>
-                        <Text style={styles.text}>{this.props.versesPool[this.props.verse.verseIndex]}</Text>
+                        <Text style={styles.text}>{this.props.versesPool[this.props.verse.verseIndex].value}</Text>
                     </View>
                 </View>
                 <View style={styles.margin} />

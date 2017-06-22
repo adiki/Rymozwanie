@@ -82,7 +82,7 @@ class GameInProgress extends Component {
         if (this.state.listViewHeight < this.state.listViewContentSizeHeight) {
             this._listView.scrollToEnd()
         } else {
-            this._listView.scrollTo({x: 0, y: 0, animated: true})
+            this._listView.scrollTo({ x: 0, y: 0, animated: true })
         }
     }
 
@@ -106,11 +106,19 @@ class GameInProgress extends Component {
         return <UserVerse verse={verse} />;
     }
 
+    renderError() {
+        if (this.props.error == null) {
+            return;
+        }
+
+        return <Text style={styles.error}>{this.props.error}</Text>;
+    }
+
     render() {
         return (
             <View>
                 <ListView ref={component => this._listView = component}
-                    style={{width: Dimensions.get('window').width}}
+                    style={{ width: Dimensions.get('window').width }}
                     dataSource={this.dataSource}
                     onLayout={(event) => {
                         const { height } = event.nativeEvent.layout
@@ -135,6 +143,7 @@ class GameInProgress extends Component {
                             return this.renderUserVerse(verse);
                         }
                     }} />
+                {this.renderError()}
                 <VerseInput />
                 <View style={{ height: this.state.keyboardHeight }} />
             </View>
@@ -143,11 +152,18 @@ class GameInProgress extends Component {
 }
 
 const styles = StyleSheet.create({
+    error: {
+        backgroundColor: 'red',
+        color: 'white',
+        padding: 8,
+        fontSize: 15,
+        fontFamily: fonts.medium
+    }
 });
 
 const mapStateToProps = state => {
-    const { verses } = state.game;
-    return { verses };
+    const { verses, error } = state.game;
+    return { verses, error };
 };
 
 export default connect(mapStateToProps)(GameInProgress);
