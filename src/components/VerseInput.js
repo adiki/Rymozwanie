@@ -28,7 +28,8 @@ class VerseInput extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TextInput style={[styles.textInput, { height: this.state.textInputHeight }]}
+                <TextInput
+                    style={[styles.textInput, { height: this.state.textInputHeight }]}
                     value={this.props.currentReply}
                     autoFocus={true}
                     returnKeyType='done'

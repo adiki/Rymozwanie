@@ -17,7 +17,7 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, verses: verses };
         case 'generate_verse':
             const newVerses = Array.from(state.verses);
-            newVerses.push({ generated: true, verseIndex: 0 })
+            newVerses.unshift({ generated: true, verseIndex: 0 })
             return { ...state, verses: newVerses };
         case 'current_reply_did_change':
             return { ...state, currentReply: action.payload }
@@ -28,8 +28,8 @@ export default (state = INITIAL_STATE, action) => {
             }
 
             newVerses = Array.from(state.verses);
-            newVerses.push({ generated: false, value: state.currentReply })
-            newVerses.push({ generated: true, verseIndex: 0 })
+            newVerses.unshift({ generated: false, value: state.currentReply })
+            newVerses.unshift({ generated: true, verseIndex: 0 })
             return { ...state, verses: newVerses, currentReply: '' }
         default:
             return state;

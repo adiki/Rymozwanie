@@ -61,6 +61,7 @@ class GameInProgress extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.createDataSource(nextProps);
+        this._listView.scrollTo({x: 0, y: 0, animated: true})
     }
 
     createDataSource({ verses }) {
@@ -82,7 +83,8 @@ class GameInProgress extends Component {
     render() {
         return (
             <View>
-                <ListView
+                <ListView ref={component => this._listView = component}
+                    style={{transform: [{ rotate: '180deg'}]}}
                     keyboardDismissMode='on-drag'
                     dataSource={this.dataSource}
                     renderRow={(verse) => {
@@ -92,7 +94,7 @@ class GameInProgress extends Component {
                             return this.renderUserVerse(verse);
                         }
                     }} />
-                <VerseInput />
+                <VerseInput/>
                 <View style={{height: this.state.keyboardHeight}} />
             </View>
         );

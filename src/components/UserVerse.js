@@ -9,7 +9,8 @@ import {
     Text,
     TouchableHighlight,
     View,
-    Dimensions
+    Dimensions,
+    Animated
 } from 'react-native';
 import { connect } from 'react-redux';
 import colors from '../config/colors';
@@ -19,21 +20,35 @@ import { generateVerse } from '../actions';
 
 class GeneratedVerse extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = { opacity: new Animated.Value(0) }
+    }
+
+    componentDidMount() {
+        Animated.timing(this.state.opacity, {
+            toValue: 1,
+            duration: 500
+        }).start();
+    }
+
     render() {
         return (
-            <View style={styles.container}>
+            <Animated.View style={[styles.container, { opacity: this.state.opacity }]}>
                 <View style={styles.innerContainer}>
                     <View style={styles.verseBox}>
                         <Text style={styles.text}>{this.props.verse.value}</Text>
                     </View>
                 </View>
-            </View>
+            </Animated.View>
         );
     }
 }
 
 const styles = StyleSheet.create({
     container: {
+        transform: [{ rotate: '180deg' }],
         width: Dimensions.get('window').width * 1,
         flexDirection: 'row',
         justifyContent: 'flex-end'
