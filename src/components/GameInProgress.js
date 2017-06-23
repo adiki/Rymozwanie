@@ -123,7 +123,6 @@ class GameInProgress extends Component {
                     onLayout={(event) => {
                         const { height } = event.nativeEvent.layout
                         this.setState({ listViewHeight: height })
-
                     }}
                     onContentSizeChange={(contentSize) => {
 
@@ -158,12 +157,20 @@ const styles = StyleSheet.create({
         padding: 8,
         fontSize: 15,
         fontFamily: fonts.medium
+    },
+    showNextVerse: {
+        position: 'absolute',
+        color: colors.orange,
+        padding: 8,
+        textAlign: 'center',
+        fontSize: 20,
+        fontFamily: fonts.junegullRegular
     }
 });
 
 const mapStateToProps = state => {
-    const { verses, error } = state.game;
-    return { verses, error };
+    const { verses, error, showNextVerse } = state.game;
+    return { verses, error, showNextVerse };
 };
 
 export default connect(mapStateToProps)(GameInProgress);

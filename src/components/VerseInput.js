@@ -15,7 +15,7 @@ import { connect } from 'react-redux';
 import colors from '../config/colors';
 import fonts from '../config/fonts';
 import navigatorStyle from '../config/navigatorStyle';
-import { currentReplyDidChange, submitReply } from '../actions';
+import { currentReplyDidChange, submitReply, generateVerse } from '../actions';
 
 class VerseInput extends Component {
 
@@ -25,6 +25,22 @@ class VerseInput extends Component {
         this.state = { textInputHeight: 34 }
     }
 
+    renderButtonText() {
+        if (this.props.showNextVerse) {
+            return (
+                <Text style={styles.replyButton}>
+                    Podaj nowy wers
+                    </Text>
+            );
+        } else {
+            return (
+                <Text style={styles.replyButton}>
+                    Odpowiedz
+                    </Text>
+            );
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -32,18 +48,17 @@ class VerseInput extends Component {
                     style={[styles.textInput, { height: this.state.textInputHeight }]}
                     value={this.props.currentReply}
                     autoFocus={true}
-                    returnKeyType='done'                
+                    returnKeyType='done'
                     multiline={true}
-                    placeholder='Twój rymujący się werset'
+                    placeholder='Twój rymujący się wers'
                     onChangeText={(this.onInputTextChange.bind(this))}
                     onSubmitEditing={this.submit.bind(this)}
                     onContentSizeChange={(e) => this.updateSize(e.nativeEvent.contentSize.height)} />
                 <TouchableHighlight style={styles.touchableHighlight}
                     onPress={this.replyButtonPressed.bind(this)}
                     underlayColor='white'>
-                    <Text style={styles.replyButton}>
-                        Odpowiedz
-                    </Text>
+                    {this.renderButtonText()}
+
                 </TouchableHighlight>
             </View>
         );
@@ -64,7 +79,11 @@ class VerseInput extends Component {
     }
 
     replyButtonPressed() {
-        this.props.submitReply();
+        if (this.props.showNextVerse) {
+            this.props.generateVerse();
+        } else {
+            this.props.submitReply();
+        }
     }
 }
 
@@ -97,8 +116,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-    const { currentReply } = state.game;
-    return { currentReply };
+    const { currentReply, showNextVerse } = state.game;
+    return { currentReply, showNextVerse };
 };
 
-export default connect(mapStateToProps, { currentReplyDidChange, submitReply })(VerseInput);
+export default connect(mapStateToProps, { currentReplyDidChange, submitReply, generateVerse })(VerseInput);
