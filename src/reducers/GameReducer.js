@@ -36,7 +36,7 @@ export default (state = INITIAL_STATE, action) => {
             keys = keys.filter((value) => state.generatedIndexes[value] != true);
 
             if (keys.length == 0) {
-                return { ...state, error: 'Brak nowych wersów do rymowania' };
+                return { ...state, error: 'Brak nowych wersów do rymowania', oldScore: state.score, score: state.score };
             }
             const index = keys[Math.floor(Math.random() * keys.length)];
             
