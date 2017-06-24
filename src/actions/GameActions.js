@@ -11,7 +11,12 @@ export const fetchStoredVerses = () => {
     return async (dispatch) => {
         try {
             let verses = await AsyncStorage.getItem('@RymozwanieStore:verses');
-            dispatch({ type: 'verses_fetched', payload: verses });
+            verses = JSON.parse(verses);
+            let score = await AsyncStorage.getItem('@RymozwanieStore:score');
+            score = JSON.parse(score);
+            let generatedIndexes = await AsyncStorage.getItem('@RymozwanieStore:generatedIndexes');
+            generatedIndexes = JSON.parse(generatedIndexes);
+            dispatch({ type: 'data_fetched', verses, score, generatedIndexes });
         } catch (error) {
             console.log(error);
         }

@@ -2,26 +2,49 @@
 
 'use strict';
 
+import {
+    AsyncStorage
+} from 'react-native';
+
 import versesPool from '../../assets/text/verses.json';
 import words from '../../assets/text/words.json';
 
 const INITIAL_STATE = {
     verses: null,
     generatedIndexes: null,
+    score: 0,
     versesPool,
     words,
     showNextVerse: false,
     currentReply: '',
     oldScore: 0,
-    score: null,
     error: null
+};
+
+const saveStateToDisk = async (state) => {
+    try {
+        let verses = await AsyncStorage.setItem('@RymozwanieStore:verses', JSON.stringify(state.verses));
+        let score = await AsyncStorage.setItem('@RymozwanieStore:score', JSON.stringify(state.score));
+        let generatedIndexes = await AsyncStorage.setItem('@RymozwanieStore:generatedIndexes', JSON.stringify(state.generatedIndexes));
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case 'verses_fetched':
-            const verses = action.payload || [];
-            return { ...state, verses: verses, generatedIndexes: {}, score: null };
+        case 'data_fetched':
+            const verses = action.verses || [];
+            const score = action.score || 0;
+            const generatedIndexes = action.generatedIndexes || {};
+
+            var lastVerse = verses[verses.length - 1];
+
+            if (!lastVerse) {
+                return { ...state, verses: verses, generatedIndexes, score };    
+            }
+
+            return { ...state, verses: verses, generatedIndexes, score, showNextVerse:  !lastVerse.generated};
         case 'generate_verse':
 
             var lastVerse = state.verses[state.verses.length - 1];
@@ -39,12 +62,15 @@ export default (state = INITIAL_STATE, action) => {
                 return { ...state, error: 'Brak nowych wersów do rymowania', oldScore: state.score, score: state.score };
             }
             const index = keys[Math.floor(Math.random() * keys.length)];
-            
+
             const newGeneratedIndexes = { ...state.generatedIndexes };
             newGeneratedIndexes[index] = true;
+
+            newVerses.push({ generated: true, verseIndex: index, time: new Date().getTime() })
             
-            newVerses.push({ generated: true, verseIndex: index, date: new Date() })
-            return { ...state, verses: newVerses, showNextVerse: false, oldScore: state.score, score: state.score, generatedIndexes: newGeneratedIndexes };
+            var newState = { ...state, verses: newVerses, showNextVerse: false, oldScore: state.score, score: state.score, generatedIndexes: newGeneratedIndexes };
+            saveStateToDisk(newState);
+            return newState
         case 'current_reply_did_change':
             return { ...state, currentReply: action.payload, error: null, oldScore: state.score, score: state.score }
         case 'submit_reply':
@@ -89,11 +115,12 @@ export default (state = INITIAL_STATE, action) => {
             newVerses = Array.from(state.verses);
             newVerses.push({ generated: false, value: state.currentReply.trim() })
 
-            const seconds = (new Date() - lastVerse.date) / 1000;
+            const seconds = (new Date().getTime() - lastVerse.time) / 1000;
             const verseScore = Math.max(0, 120 - seconds) / 120 * 50 + Math.min(replayWords.length * 10, 50);
 
-
-            return { ...state, verses: newVerses, currentReply: '', showNextVerse: true, oldScore: state.score, score: state.score + verseScore }
+            var newState = { ...state, verses: newVerses, currentReply: '', showNextVerse: true, oldScore: state.score, score: state.score + verseScore }
+            saveStateToDisk(newState)
+            return newState
         default:
             return state;
     }
