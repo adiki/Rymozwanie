@@ -5,20 +5,28 @@
 'use strict';
 
 import React, { Component } from 'react';
+import {
+	AppRegistry,
+	UIManager
+} from 'react-native';
 import { registerScreens } from './screens';
 import { Navigation } from 'react-native-navigation';
 import { Provider } from 'react-redux';
 import configureStore from './store/configureStore';
 import navigatorStyle from './config/navigatorStyle';
+import Game from './screens/Game'
+
+UIManager.setLayoutAnimationEnabledExperimental &&
+	UIManager.setLayoutAnimationEnabledExperimental(true);
 
 const store = configureStore();
 
-registerScreens(store, Provider);
+const App = () => {
+	return (
+		<Provider store={store}>
+			<Game />
+		</Provider>
+	);
+};
 
-Navigation.startSingleScreenApp({
-	screen: {
-		screen: 'rymozwanie.Game',
-		title: 'Rymozwanie',
-		navigatorStyle
-	}
-});
+export default App;

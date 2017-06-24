@@ -8,7 +8,6 @@ import {
   Dimensions,
   ActivityIndicator,
   Image,
-  KeyboardAvoidingView,
   Text,
   TouchableHighlight,
   View,

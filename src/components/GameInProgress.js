@@ -11,7 +11,8 @@ import {
     View,
     Keyboard,
     Dimensions,
-    LayoutAnimation
+    LayoutAnimation,
+    Animated
 } from 'react-native';
 import { connect } from 'react-redux';
 import colors from '../config/colors';
@@ -19,6 +20,7 @@ import fonts from '../config/fonts';
 import navigatorStyle from '../config/navigatorStyle';
 import { generateVerse } from '../actions';
 import GeneratedVerse from './GeneratedVerse';
+import Header from './Header';
 import UserVerse from './UserVerse';
 import VerseInput from './VerseInput';
 
@@ -28,7 +30,7 @@ class GameInProgress extends Component {
         super(props);
 
         this.isKeyboardPresenting = false;
-        this.state = { keyboardHeight: 0, listViewHeight: 0, listViewContentSizeHeight: 0 };
+        this.state = { keyboardHeight: 0, listViewHeight: 0, listViewContentSizeHeight: 0, scoreValue: 0 };
     }
 
     componentWillMount() {
@@ -40,6 +42,15 @@ class GameInProgress extends Component {
         this.keyboardDidShow = Keyboard.addListener('keyboardDidShow', this.keyboardDidShow);
         this.keyboardWillHide = Keyboard.addListener('keyboardWillHide', this.keyboardWillHide);
         this.keyboardDidHide = Keyboard.addListener('keyboardDidHide', this.keyboardDidHide);
+
+        
+        const score = new Animated.Value(0)
+        score.addListener(({value}) => this.setState({scoreValue: value}));
+
+        Animated.timing(score, {
+            toValue: this.props.score,
+            duration: 1000,
+        }).start();
     }
 
     componentWillUnmount() {
@@ -88,6 +99,14 @@ class GameInProgress extends Component {
 
     componentWillReceiveProps(nextProps) {
         this.createDataSource(nextProps);
+
+        const score = new Animated.Value(nextProps.oldScore)
+        score.addListener(({value}) => this.setState({scoreValue: value}));
+
+        Animated.timing(score, {
+            toValue: nextProps.score,
+            duration: 1000,
+        }).start();
     }
 
     createDataSource({ verses }) {
@@ -117,6 +136,7 @@ class GameInProgress extends Component {
     render() {
         return (
             <View>
+                <Header title={`Twój wynik: ${Math.floor(this.state.scoreValue)}`} />
                 <ListView ref={component => this._listView = component}
                     style={{ width: Dimensions.get('window').width }}
                     dataSource={this.dataSource}
@@ -169,8 +189,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-    const { verses, error, showNextVerse } = state.game;
-    return { verses, error, showNextVerse };
+    const { verses, error, showNextVerse, score, oldScore } = state.game;
+    return { verses, error, showNextVerse, score, oldScore };
 };
 
 export default connect(mapStateToProps)(GameInProgress);

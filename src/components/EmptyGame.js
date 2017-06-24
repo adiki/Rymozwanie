@@ -15,21 +15,26 @@ import colors from '../config/colors';
 import fonts from '../config/fonts';
 import navigatorStyle from '../config/navigatorStyle';
 import { generateVerse } from '../actions';
+import Header from './Header';
 
 class EmptyGame extends Component {
 
   render() {
     return (
-      <View>
-        <Text style={styles.gameDescription}>
-          Rymozwanie to gra polegająca na układaniu rymujących się wersów.
+      <View style={styles.container}>
+        <Header title='Rymozwanie' />
+        <View>
+          <Text style={styles.gameDescription}>
+            Rymozwanie to gra polegająca na układaniu rymujących się wersów.
         </Text>
-        <TouchableHighlight onPress={this.newGameButtonPressed.bind(this)}
-          underlayColor='white'>
-          <Text style={styles.startGameButton}>
-            Rozpocznij grę
+          <TouchableHighlight onPress={this.newGameButtonPressed.bind(this)}
+            underlayColor='white'>
+            <Text style={styles.startGameButton}>
+              Rozpocznij grę
           </Text>
-        </TouchableHighlight>
+          </TouchableHighlight>
+        </View>
+        <View />
       </View>
     );
   }
@@ -40,6 +45,11 @@ class EmptyGame extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   gameDescription: {
     fontSize: 20,
     fontFamily: fonts.medium,
